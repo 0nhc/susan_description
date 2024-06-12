@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<launch>
+  <arg name="use_sim_time" default="false"/>
+
+  <param name="use_sim_time" value="$(arg use_sim_time)" />
+
+  <include file="$(find susan_description)/launch/description.launch">
+    <arg name="use_sim_time" value="$(arg use_sim_time)"/>
+  </include>
+
+  <node name="rviz" pkg="rviz" type="rviz" args="-d $(find susan_description)/rviz/urdf_viewer.rviz" />
+  
+  <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" respawn="false" output="screen">
+      <param name="use_tf_static" value="true"/>
+      <param name="publish_frequency" value="50"/>
+      <param name="ignore_timestamp" value="true"/>
+  </node>
+
+  <node name="joint_state_publisher_gui" pkg="joint_state_publisher_gui" type="joint_state_publisher_gui" />
+</launch>
